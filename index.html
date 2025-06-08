@@ -185,16 +185,13 @@ select, input, button, .custom-select {
 
     let selectedRaid = "VoG";
 
-    // Set initial display to full raid name
     raidDisplay.innerHTML = `<img src="images/${raids[selectedRaid].icon}" alt="${selectedRaid}">${raids[selectedRaid].name}`;
 
-    // Load saved userTag from localStorage
     const savedUserTag = localStorage.getItem("userTag");
     if (savedUserTag) {
       userTagInput.value = savedUserTag;
     }
 
-    // Save userTag to localStorage on input change
     userTagInput.addEventListener("input", () => {
       const tag = userTagInput.value.trim();
       if (tag) {
@@ -204,7 +201,6 @@ select, input, button, .custom-select {
       }
     });
 
-    // Populate raid options
     for (const [abbr, data] of Object.entries(raids)) {
       const option = document.createElement("div");
       option.className = "select-option";
@@ -219,12 +215,10 @@ select, input, button, .custom-select {
       raidMenu.appendChild(option);
     }
 
-    // Toggle dropdown
     raidDisplay.addEventListener("click", () => {
       raidMenu.classList.toggle("show");
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener("click", (e) => {
       if (!raidSelect.contains(e.target)) {
         raidMenu.classList.remove("show");
@@ -241,7 +235,6 @@ select, input, button, .custom-select {
       });
     }
 
-    // Initialize
     updateEncounters(raids[selectedRaid].encounters);
 
 function copyCommand() {
@@ -258,7 +251,6 @@ function copyCommand() {
   localStorage.setItem("userTag", tag);
   const command = `!queue ${raid} ${encounter} normal ${tag}`;
 
-  // Try Clipboard API first
   if (navigator.clipboard) {
     navigator.clipboard.writeText(command).then(() => {
       feedback.textContent = "Copied: " + command;
