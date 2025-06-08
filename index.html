@@ -243,7 +243,7 @@ function copyCommand() {
   const tag = userTagInput.value.trim();
 
   if (!raid || !encounter || !tag || !tag.includes("#")) {
-    feedback.textContent = "Please fill out all fields correctly (name#number).";
+    feedback.textContent = "Please fill out all fields correctly (Username#BungieID).";
     feedback.style.color = "red";
     return;
   }
