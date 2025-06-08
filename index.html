@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destiny Checkpoints</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+.container {
+  background-color: #222;
+  padding: 10px 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #000;
+  max-width: 350px;
+  width: 100%;
+  text-align: center;
+  min-height: 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  font-weight: bold;
+}
+
+select, input, button, .custom-select {
+  width: 100%;
+  height: 36px;
+
+  padding: 6px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
+  box-sizing: border-box;
+}
+
+    button {
+      background-color: #444;
+      border: 1px solid white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+#feedback {
+  font-size: 14px;      /* Match the other input/button font size */
+  font-family: monospace; /* Keeps command styling, optional */
+  min-height: 1.4em;
+  height: auto;
+  overflow-wrap: break-word;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.4;
+  transition: none;
+}
+
+
+    .custom-select {
+      position: relative;
+    }
+
+    .select-display {
+      height: 100%;
+      padding: 8px;
+      background-color: #333;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .select-display img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+
+    .select-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #333;
+      border-radius: 4px;
+      border: 1px solid white;
+      z-index: 10;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .select-menu.show {
+      display: block;
+    }
+
+    .select-option {
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .select-option:hover {
+      background-color: #444;
+    }
+
+    .select-option img {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Destiny Checkpoints</h2>
+    <div class="custom-select" id="raidSelect">
+      <div class="select-display" id="raidDisplay">
+        <img src="images/vog.png" alt="VoG"><span>VoG</span>
+      </div>
+      <div class="select-menu" id="raidMenu"></div>
+    </div>
+    <select id="encounterSelect"></select>
+    <input type="text" id="userTag" placeholder="Your name#number" />
+    <button onclick="copyCommand()">Copy Queue Command</button>
+    <p id="feedback" style="color: lightgreen;"></p>
+  </div>
+
+  <script>
+    const raids = {
+      "VoG": { name: "Vault of Glass", icon: "vog.png", encounters: ["Confluxes", "Post-Templar", "Gatekeeper"] },
+      "LW": { name: "Last Wish", icon: "lw.png", encounters: ["Shuro-Chi", "Morgeth", "Queenswalk"] },
+      "GoS": { name: "Garden of Salvation", icon: "gos.png", encounters: ["Chest1", "Chest2", "Sanctified"] },
+      "VotD": { name: "Vow of the Disciple", icon: "votd.png", encounters: ["Chest1", "Chest2", "Rhulk"] },
+      "SD": { name: "Sundred Doctrine", icon: "sd.png", encounters: ["Chest1", "Chest2", "Boss", "1", "2"] },
+      "KF": { name: "King's Fall", icon: "kf.png", encounters: ["Maze", "Wall", "Oryx", "Golgoroth", "Daughters"] },
+      "SE": { name: "Salvation's Edge", icon: "se.png", encounters: ["Chest1", "Chest2", "Witness"] },
+      "VH": { name: "Vesper's Host", icon: "vh.png", encounters: ["Chest1", "Chest2", "Boss", "1", "2"] },
+      "Duality": { name: "Duality", icon: "duality.png", encounters: ["Chest1", "Chest2", "Boss", "2"] },
+      "RoN": { name: "Root of Nightmares", icon: "ron.png", encounters: ["Chest1", "Chest2", "Nezarec"] },
+      "Prophecy": { name: "Prophecy", icon: "prophecy.png", encounters: ["1", "2", "Boss"] },
+      "GoA": { name: "Grasp of Avarice", icon: "goa.png", encounters: ["Chest1", "Chest2", "Boss"] },
+      "SotW": { name: "Spire of the Watcher", icon: "sotw.png", encounters: ["Chest1", "Chest2", "Boss"] },
+      "CE": { name: "Crota's End", icon: "ce.png", encounters: ["Abyss", "Crota"] },
+      "GotD": { name: "Ghosts of the Deep", icon: "gotd.png", encounters: ["Chest1", "Boss"] },
+      "WR": { name: "Warlord's Ruin", icon: "wr.png", encounters: ["Chest", "Boss"] },
+      "PoH": { name: "Pit of Heresy", icon: "poh.png", encounters: ["Boss"] },
+      "ST": { name: "Shattered Throne", icon: "st.png", encounters: ["Boss"] },
+    };
+
+    const raidSelect = document.getElementById("raidSelect");
+    const raidDisplay = document.getElementById("raidDisplay");
+    const raidMenu = document.getElementById("raidMenu");
+    const encounterSelect = document.getElementById("encounterSelect");
+    const userTagInput = document.getElementById("userTag");
+    const feedback = document.getElementById("feedback");
+
+    let selectedRaid = "VoG";
+
+    // Set initial display to full raid name
+    raidDisplay.innerHTML = `<img src="images/${raids[selectedRaid].icon}" alt="${selectedRaid}">${raids[selectedRaid].name}`;
+
+    // Load saved userTag from localStorage
+    const savedUserTag = localStorage.getItem("userTag");
+    if (savedUserTag) {
+      userTagInput.value = savedUserTag;
+    }
+
+    // Save userTag to localStorage on input change
+    userTagInput.addEventListener("input", () => {
+      const tag = userTagInput.value.trim();
+      if (tag) {
+        localStorage.setItem("userTag", tag);
+      } else {
+        localStorage.removeItem("userTag"); // Clear if input is empty
+      }
+    });
+
+    // Populate raid options
+    for (const [abbr, data] of Object.entries(raids)) {
+      const option = document.createElement("div");
+      option.className = "select-option";
+      option.dataset.value = abbr;
+      option.innerHTML = `<img src="images/${data.icon}" alt="${abbr}">${data.name}`;
+      option.addEventListener("click", () => {
+        selectedRaid = abbr;
+        raidDisplay.innerHTML = `<img src="images/${data.icon}" alt="${abbr}">${data.name}`;
+        raidMenu.classList.remove("show");
+        updateEncounters(data.encounters);
+      });
+      raidMenu.appendChild(option);
+    }
+
+    // Toggle dropdown
+    raidDisplay.addEventListener("click", () => {
+      raidMenu.classList.toggle("show");
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!raidSelect.contains(e.target)) {
+        raidMenu.classList.remove("show");
+      }
+    });
+
+    function updateEncounters(encounters) {
+      encounterSelect.innerHTML = "";
+      encounters.forEach(enc => {
+        const opt = document.createElement("option");
+        opt.value = enc;
+        opt.textContent = enc;
+        encounterSelect.appendChild(opt);
+      });
+    }
+
+    // Initialize
+    updateEncounters(raids[selectedRaid].encounters);
+
+function copyCommand() {
+  const raid = selectedRaid;
+  const encounter = encounterSelect.value;
+  const tag = userTagInput.value.trim();
+
+  if (!raid || !encounter || !tag || !tag.includes("#")) {
+    feedback.textContent = "Please fill out all fields correctly (name#number).";
+    feedback.style.color = "red";
+    return;
+  }
+
+  localStorage.setItem("userTag", tag);
+  const command = `!queue ${raid} ${encounter} normal ${tag}`;
+
+  // Try Clipboard API first
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(command).then(() => {
+      feedback.textContent = "Copied: " + command;
+      feedback.style.color = "lightgreen";
+    }).catch(() => {
+      fallbackCopy(command);
+    });
+  } else {
+    fallbackCopy(command);
+  }
+}
+
+function fallbackCopy(text) {
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand("copy");
+    feedback.textContent = "Copied: " + text;
+    feedback.style.color = "lightgreen";
+  } catch (err) {
+    feedback.textContent = "Failed to copy to clipboard.";
+    feedback.style.color = "red";
+  }
+  document.body.removeChild(textarea);
+}
+  </script>
+</body>
+</html>
