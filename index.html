@@ -12,50 +12,80 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 90vh;
       margin: 0;
       padding: 20px;
     }
 
-.container {
-  background-color: #222;
-  padding: 10px 15px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #000;
-  max-width: 350px;
-  width: 100%;
-  text-align: center;
-  min-height: 310px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 10px;
-}
+    .container {
+      background-color: #222;
+      padding: 10px 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #000;
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+    }
 
-h2 {
-  margin-top: 0;
-  margin-bottom: 8px;
-}
+    h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      text-align: center;
+    }
 
-label {
-  display: block;
-  margin-top: 6px;
-  margin-bottom: 2px;
-  font-weight: bold;
-}
+    label {
+      display: block;
+      margin-top: 6px;
+      margin-bottom: 2px;
+      font-weight: bold;
+    }
 
-select, input, button, .custom-select {
-  width: 100%;
-  height: 36px;
+    select, input, button, .custom-select {
+      width: 100%;
+      height: 36px;
+      padding: 6px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      background-color: #333;
+      color: white;
+      box-sizing: border-box;
+    }
 
-  padding: 6px;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  background-color: #333;
-  color: white;
-  box-sizing: border-box;
-}
+    /* Style for encounter select to match raid dropdown caret */
+    select#encounterSelect {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      padding-right: 30px; /* Space for custom caret */
+      line-height: 1.4;
+      background-color: #333;
+    }
+
+    /* Wrapper for encounter select to position the caret */
+    .select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .select-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid white;
+      pointer-events: none;
+    }
 
     button {
       background-color: #444;
@@ -69,18 +99,17 @@ select, input, button, .custom-select {
       background-color: #555;
     }
 
-#feedback {
-  font-size: 14px;
-  font-family: monospace;
-  min-height: 1.4em;
-  height: auto;
-  overflow-wrap: break-word;
-  white-space: normal;
-  word-break: break-word;
-  line-height: 1.4;
-  transition: none;
-}
-
+    #feedback {
+      font-size: 14px;
+      font-family: monospace;
+      min-height: 1.4em;
+      height: auto;
+      overflow-wrap: break-word;
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.4;
+      transition: none;
+    }
 
     .custom-select {
       position: relative;
@@ -88,19 +117,38 @@ select, input, button, .custom-select {
 
     .select-display {
       height: 100%;
-      padding: 8px;
+      padding: 8px 24px 8px 0px;
       background-color: #333;
       border-radius: 4px;
       cursor: pointer;
       display: flex;
-      align-items: center;
+      align-items: center; /* Vertical alignment for children */
+      position: relative;
       box-sizing: border-box;
+    }
+
+    .raid-content {
+      display: flex;
+      align-items: center; /* Vertical center */
+      gap: 8px;
     }
 
     .select-display img {
       width: 16px;
       height: 16px;
-      margin-right: 8px;
+    }
+
+    .select-display .caret {
+      position: absolute;
+      right: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid white;
+      pointer-events: none;
     }
 
     .select-menu {
@@ -137,44 +185,548 @@ select, input, button, .custom-select {
       height: 16px;
       margin-right: 8px;
     }
+
+    .difficulty-container {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .difficulty-container label {
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      margin: 0;
+    }
+
+    .difficulty-container input[type="radio"] {
+      width: auto;
+      margin-right: 5px;
+    }
+
+    .category-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .category-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #333;
+      border: 2px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .category-button img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .category-button.selected {
+      border-color: #fff;
+      background-color: #444;
+    }
+
+    .category-button:hover {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Destiny Checkpoints</h2>
+    <h2 id="categoryTitle">D2Checkpoints</h2>
+    <div class="category-buttons">
+      <div class="category-button selected" data-category="D2Checkpoints">
+        <img src="images/d2checkpoints.png" alt="D2Checkpoints">
+      </div>
+      <div class="category-button" data-category="D2Chests">
+        <img src="images/d2chests.png" alt="D2Chests">
+      </div>
+      <div class="category-button" data-category="LuckBot9">
+        <img src="images/luckbot9.png" alt="LuckBot9">
+      </div>
+      <div class="category-button" data-category="GuardianDownBot">
+        <img src="images/guardiandownbot.png" alt="GuardianDownBot">
+      </div>
+      <div class="category-button" data-category="TravelersChosenTeam">
+        <img src="images/travelerschosenteam.png" alt="TravelersChosenTeam">
+      </div>
+      <div class="category-button" data-category="DestinyCheckpoints">
+        <img src="images/destinycheckpoints.png" alt="DestinyCheckpoints">
+      </div>
+    </div>
+
+    <!-- Custom Raid Dropdown -->
     <div class="custom-select" id="raidSelect">
       <div class="select-display" id="raidDisplay">
-        <img src="images/vog.png" alt="VoG"><span>VoG</span>
+        <span class="raid-content">
+          <img src="images/vog.png" alt="VoG">
+          <span>Vault of Glass</span>
+        </span>
+        <span class="caret"></span>
       </div>
       <div class="select-menu" id="raidMenu"></div>
     </div>
-    <select id="encounterSelect"></select>
+
+    <!-- Native Encounter Select -->
+    <div class="select-wrapper">
+      <select id="encounterSelect"></select>
+    </div>
+
+    <!-- Difficulty Toggle -->
+    <div class="difficulty-container">
+      <label><input type="radio" name="difficulty" value="normal" checked> Normal</label>
+      <label><input type="radio" name="difficulty" value="master"> Master</label>
+    </div>
+
     <input type="text" id="userTag" placeholder="Username#BungieID" />
     <button onclick="copyCommand()">Copy Queue Command</button>
     <p id="feedback" style="color: lightgreen;"></p>
   </div>
+</body>
+</html>
 
   <script>
     const raids = {
-      "VoG": { name: "Vault of Glass", icon: "vog.png", encounters: ["Confluxes", "Post-Templar", "Gatekeeper"] },
-      "LW": { name: "Last Wish", icon: "lw.png", encounters: ["Shuro-Chi", "Morgeth", "Queenswalk"] },
-      "GoS": { name: "Garden of Salvation", icon: "gos.png", encounters: ["Chest1", "Chest2", "Sanctified"] },
-      "VotD": { name: "Vow of the Disciple", icon: "votd.png", encounters: ["Chest1", "Chest2", "Rhulk"] },
-      "SD": { name: "Sundred Doctrine", icon: "sd.png", encounters: ["Chest1", "Chest2", "Boss", "1", "2"] },
-      "KF": { name: "King's Fall", icon: "kf.png", encounters: ["Maze", "Wall", "Oryx", "Golgoroth", "Daughters"] },
-      "SE": { name: "Salvation's Edge", icon: "se.png", encounters: ["Chest1", "Chest2", "Witness"] },
-      "VH": { name: "Vesper's Host", icon: "vh.png", encounters: ["Chest1", "Chest2", "Boss", "1", "2"] },
-      "Duality": { name: "Duality", icon: "duality.png", encounters: ["Chest1", "Chest2", "Boss", "2"] },
-      "RoN": { name: "Root of Nightmares", icon: "ron.png", encounters: ["Chest1", "Chest2", "Nezarec"] },
-      "Prophecy": { name: "Prophecy", icon: "prophecy.png", encounters: ["1", "2", "Boss"] },
-      "GoA": { name: "Grasp of Avarice", icon: "goa.png", encounters: ["Chest1", "Chest2", "Boss"] },
-      "SotW": { name: "Spire of the Watcher", icon: "sotw.png", encounters: ["Chest1", "Chest2", "Boss"] },
-      "CE": { name: "Crota's End", icon: "ce.png", encounters: ["Abyss", "Crota"] },
-      "GotD": { name: "Ghosts of the Deep", icon: "gotd.png", encounters: ["Chest1", "Boss"] },
-      "WR": { name: "Warlord's Ruin", icon: "wr.png", encounters: ["Chest", "Boss"] },
-      "PoH": { name: "Pit of Heresy", icon: "poh.png", encounters: ["Boss"] },
-      "ST": { name: "Shattered Throne", icon: "st.png", encounters: ["Boss"] },
+      "VoG": { 
+        name: "Vault of Glass", 
+        icon: "vog.png", 
+        encounters: {
+          D2Checkpoints: ["Confluxes", "Post-Templar", "Gatekeeper"],
+          D2Chests: ["Confluxes", "Post-Templar", "Gatekeeper"],
+          LuckBot9: ["Confluxes", "Post-Templar", "Atheon"],
+          GuardianDownBot: ["Confluxes", "Post-Templar", "Gatekeeper"],
+          TravelersChosenTeam: ["Confluxes", "Post-Templar", "Gatekeeper"],
+          DestinyCheckpoints: ["Confluxes", "Templar", "Post-Templar"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "LW": { 
+        name: "Last Wish", 
+        icon: "lw.png", 
+        encounters: {
+          D2Checkpoints: ["Shuro-Chi", "Morgeth", "Queenswalk"],
+          D2Chests: ["Shuro-Chi", "Morgeth"],
+          LuckBot9: ["Shuro-Chi", "Morgeth", "Queenswalk"],
+          GuardianDownBot: ["Shuro-Chi", "Morgeth"],
+          TravelersChosenTeam: ["Shuro-Chi", "Morgeth", "Queenswalk"],
+          DestinyCheckpoints: ["Shuro-Chi", "Morgeth", "Queenswalk"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "GoS": { 
+        name: "Garden of Salvation", 
+        icon: "gos.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Sanctified"],
+          D2Chests: ["Chest1", "Chest2", "Sanctified"],
+          LuckBot9: ["Chest1", "Chest2", "Sanctified"],
+          GuardianDownBot: ["Chest1", "Chest2", "Sanctified"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Sanctified"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Sanctified"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "VotD": { 
+        name: "Vow of the Disciple", 
+        icon: "votd.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Rhulk"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Rhulk"],
+          GuardianDownBot: ["Chest1", "Chest2"],
+          TravelersChosenTeam: ["Chest1", "Chest2"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Rhulk"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "SD": { 
+        name: "Sundred Doctrine", 
+        icon: "sd.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Boss"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Boss"],
+          GuardianDownBot: ["Chest1", "Chest2", "Boss"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Boss"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: ["1", "2"],
+          D2Chests: [],
+          LuckBot9: ["1", "2"],
+          GuardianDownBot: ["1"],
+          TravelersChosenTeam: ["1", "2"],
+          DestinyCheckpoints: ["1", "2"]
+        }
+      },
+      "KF": { 
+        name: "King's Fall", 
+        icon: "kf.png", 
+        encounters: {
+          D2Checkpoints: ["Maze", "Wall", "Oryx"],
+          D2Chests: ["Ships", "Maze", "Wall"],
+          LuckBot9: ["Maze", "Wall", "Oryx"],
+          GuardianDownBot: ["Maze", "Wall", "Oryx"],
+          TravelersChosenTeam: ["Maze", "Wall", "Oryx"],
+          DestinyCheckpoints: ["Maze", "Wall", "Oryx"]
+        },
+        masterEncounters: {
+          D2Checkpoints: ["Golgoroth", "Daughters"],
+          D2Chests: [],
+          LuckBot9: ["Golgoroth", "Warpriest"],
+          GuardianDownBot: ["Totems", "Golgoroth"],
+          TravelersChosenTeam: ["Warpriest", "Daughters"],
+          DestinyCheckpoints: ["Totems", "Daughters"]
+        }
+      },
+      "SE": { 
+        name: "Salvation's Edge", 
+        icon: "se.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Witness"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Witness"],
+          GuardianDownBot: ["Chest1", "Chest2", "Witness"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Witness"],
+          DestinyCheckpoints: ["Chest2", "Witness"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "VH": { 
+        name: "Vesper's Host", 
+        icon: "vh.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Boss"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["2", "Chest2", "Boss"],
+          GuardianDownBot: ["Chest1", "Chest2", "Boss"],
+          TravelersChosenTeam: ["2", "Chest2", "Boss"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: ["1", "2"],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: ["1", "2"],
+          TravelersChosenTeam: ["1"],
+          DestinyCheckpoints: ["1", "2"]
+        }
+      },
+      "Duality": { 
+        name: "Duality", 
+        icon: "duality.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Boss"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Boss"],
+          GuardianDownBot: ["Chest1", "Chest2", "Boss"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Boss"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: ["1", "2"],
+          D2Chests: [],
+          LuckBot9: ["1", "2"],
+          GuardianDownBot: ["1", "2"],
+          TravelersChosenTeam: ["1", "2"],
+          DestinyCheckpoints: ["1", "2"]
+        }
+      },
+      "RoN": { 
+        name: "Root of Nightmares", 
+        icon: "ron.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Nezarec"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Nezarec"],
+          GuardianDownBot: ["Chest1", "Chest2", "Nezarec"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Nezarec"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Nezarec"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "Prophecy": { 
+        name: "Prophecy", 
+        icon: "prophecy.png", 
+        encounters: {
+          D2Checkpoints: ["1", "2", "Boss"],
+          D2Chests: ["Chests"],
+          LuckBot9: ["1", "2", "Boss"],
+          GuardianDownBot: ["1", "Chest1", "Boss"],
+          TravelersChosenTeam: ["1", "2", "Boss"],
+          DestinyCheckpoints: ["1", "Chest1", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "GoA": { 
+        name: "Grasp of Avarice", 
+        icon: "goa.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Boss"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Boss"],
+          GuardianDownBot: ["Chest1", "Chest2", "Boss"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Boss"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "SotW": { 
+        name: "Spire of the Watcher", 
+        icon: "sotw.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Chest2", "Boss"],
+          D2Chests: ["Chest1", "Chest2"],
+          LuckBot9: ["Chest1", "Chest2", "Boss"],
+          GuardianDownBot: ["Chest1", "Chest2", "Boss"],
+          TravelersChosenTeam: ["Chest1", "Chest2", "Boss"],
+          DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "CE": { 
+        name: "Crota's End", 
+        icon: "ce.png", 
+        encounters: {
+          D2Checkpoints: ["Abyss", "Crota"],
+          D2Chests: ["Abyss"],
+          LuckBot9: ["Abyss", "Crota"],
+          GuardianDownBot: ["Abyss", "Crota"],
+          TravelersChosenTeam: ["Crota"],
+          DestinyCheckpoints: ["Abyss", "Crota"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "GotD": { 
+        name: "Ghosts of the Deep", 
+        icon: "gotd.png", 
+        encounters: {
+          D2Checkpoints: ["Chest1", "Boss"],
+          D2Chests: ["Chest1", "Boss"],
+          LuckBot9: ["Chest1", "Boss"],
+          GuardianDownBot: ["Chest1", "Boss"],
+          TravelersChosenTeam: ["Chest1", "Boss"],
+          DestinyCheckpoints: ["Chest1", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "WR": { 
+        name: "Warlord's Ruin", 
+        icon: "wr.png", 
+        encounters: {
+          D2Checkpoints: ["Chest", "Boss"],
+          D2Chests: ["Chest"],
+          LuckBot9: ["Chest", "Boss"],
+          GuardianDownBot: [],
+          TravelersChosenTeam: ["Chest", "Boss"],
+          DestinyCheckpoints: ["Chest", "Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "PoH": { 
+        name: "Pit of Heresy", 
+        icon: "poh.png", 
+        encounters: {
+          D2Checkpoints: ["Boss"],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: ["Boss"],
+          DestinyCheckpoints: ["Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "ST": { 
+        name: "Shattered Throne", 
+        icon: "st.png", 
+        encounters: {
+          D2Checkpoints: ["Boss"],
+          D2Chests: [],
+          LuckBot9: ["Boss"],
+          GuardianDownBot: [],
+          TravelersChosenTeam: ["Boss"],
+          DestinyCheckpoints: ["Boss"]
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "LF": { 
+        name: "Light Fall", 
+        icon: "lf.png", 
+        encounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: ["FirstContact", "1", "2", "3", "4", "5", "6", "7", "8"],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "WQ": { 
+        name: "Witch Queen", 
+        icon: "wq.png", 
+        encounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: ["1", "2", "3", "4", "5", "6", "7", "8"],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      },
+      "FS": { 
+        name: "Final Shape", 
+        icon: "fs.png", 
+        encounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: ["Ascent", "Dissent", "Iconoclasm", "1", "2", "3", "4", "5", "6", "7"],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        },
+        masterEncounters: {
+          D2Checkpoints: [],
+          D2Chests: [],
+          LuckBot9: [],
+          GuardianDownBot: [],
+          TravelersChosenTeam: [],
+          DestinyCheckpoints: []
+        }
+      }
     };
+
+    const categories = [
+      { name: "D2Checkpoints", icon: "d2checkpoints.png" },
+      { name: "D2Chests", icon: "d2chests.png" },
+      { name: "LuckBot9", icon: "luckbot9.png" },
+      { name: "GuardianDownBot", icon: "d2chests.png" },
+      { name: "TravelersChosenTeam", icon: "d2chests.png" },
+      { name: "DestinyCheckpoints", icon: "d2chests.png" }
+    ];
 
     const raidSelect = document.getElementById("raidSelect");
     const raidDisplay = document.getElementById("raidDisplay");
@@ -182,10 +734,16 @@ select, input, button, .custom-select {
     const encounterSelect = document.getElementById("encounterSelect");
     const userTagInput = document.getElementById("userTag");
     const feedback = document.getElementById("feedback");
+    const difficultyRadios = document.getElementsByName("difficulty");
+    const categoryButtons = document.querySelectorAll(".category-button");
+    const categoryTitle = document.getElementById("categoryTitle");
 
     let selectedRaid = "VoG";
+    let selectedDifficulty = "normal";
+    let selectedCategory = "D2Checkpoints";
 
-    raidDisplay.innerHTML = `<img src="images/${raids[selectedRaid].icon}" alt="${selectedRaid}">${raids[selectedRaid].name}`;
+    // Initialize with first valid raid
+    updateRaidMenu();
 
     const savedUserTag = localStorage.getItem("userTag");
     if (savedUserTag) {
@@ -201,18 +759,39 @@ select, input, button, .custom-select {
       }
     });
 
-    for (const [abbr, data] of Object.entries(raids)) {
-      const option = document.createElement("div");
-      option.className = "select-option";
-      option.dataset.value = abbr;
-      option.innerHTML = `<img src="images/${data.icon}" alt="${abbr}">${data.name}`;
-      option.addEventListener("click", () => {
-        selectedRaid = abbr;
-        raidDisplay.innerHTML = `<img src="images/${data.icon}" alt="${abbr}">${data.name}`;
-        raidMenu.classList.remove("show");
-        updateEncounters(data.encounters);
-      });
-      raidMenu.appendChild(option);
+    function updateRaidMenu() {
+      raidMenu.innerHTML = "";
+      let validRaids = [];
+      
+      // Find all raids with non-empty encounters for current category and difficulty
+      for (const [abbr, data] of Object.entries(raids)) {
+        const encounters = selectedDifficulty === "master" && data.masterEncounters?.[selectedCategory]
+          ? [...new Set([...(data.encounters[selectedCategory] || []), ...(data.masterEncounters[selectedCategory] || [])])]
+          : data.encounters[selectedCategory] || [];
+        
+        if (encounters.length > 0) {
+          validRaids.push(abbr);
+          const option = document.createElement("div");
+          option.className = "select-option";
+          option.dataset.value = abbr;
+          option.innerHTML = `<img src="images/${data.icon}" alt="${abbr}">${data.name}`;
+          option.addEventListener("click", () => {
+            selectedRaid = abbr;
+            raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span><span class="caret"></span>`;
+            raidMenu.classList.remove("show");
+            updateEncounters();
+          });
+          raidMenu.appendChild(option);
+        }
+      }
+
+      // Ensure selectedRaid is valid; if not, select first valid raid
+      if (!validRaids.includes(selectedRaid)) {
+        selectedRaid = validRaids[0] || "VoG";
+        raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${raids[selectedRaid].icon}" alt="${selectedRaid}">${raids[selectedRaid].name}</span><span class="caret"></span>`;
+      }
+
+      updateEncounters();
     }
 
     raidDisplay.addEventListener("click", () => {
@@ -225,59 +804,90 @@ select, input, button, .custom-select {
       }
     });
 
-    function updateEncounters(encounters) {
+    difficultyRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        selectedDifficulty = radio.value;
+        updateRaidMenu();
+      });
+    });
+
+    categoryButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        categoryButtons.forEach(btn => btn.classList.remove("selected"));
+        button.classList.add("selected");
+        selectedCategory = button.dataset.category;
+        categoryTitle.textContent = selectedCategory;
+        updateRaidMenu();
+      });
+    });
+
+    function updateEncounters() {
+      const currentEncounter = encounterSelect.value;
       encounterSelect.innerHTML = "";
+      let encounters = [];
+      if (selectedDifficulty === "master" && raids[selectedRaid].masterEncounters && raids[selectedRaid].masterEncounters[selectedCategory]) {
+        encounters = [...new Set([
+          ...(raids[selectedRaid].encounters[selectedCategory] || []),
+          ...(raids[selectedRaid].masterEncounters[selectedCategory] || [])
+        ])];
+      } else {
+        encounters = raids[selectedRaid].encounters[selectedCategory] || [];
+      }
       encounters.forEach(enc => {
         const opt = document.createElement("option");
         opt.value = enc;
         opt.textContent = enc;
         encounterSelect.appendChild(opt);
       });
+
+      // Restore the previous selection if it exists
+      if (currentEncounter && encounters.includes(currentEncounter)) {
+        encounterSelect.value = currentEncounter;
+      }
     }
 
-    updateEncounters(raids[selectedRaid].encounters);
+    function copyCommand() {
+      const raid = selectedRaid;
+      const encounter = encounterSelect.value;
+      const tag = userTagInput.value.trim();
+      const difficulty = selectedDifficulty;
 
-function copyCommand() {
-  const raid = selectedRaid;
-  const encounter = encounterSelect.value;
-  const tag = userTagInput.value.trim();
+      if (!raid || !encounter || !tag || !tag.includes("#")) {
+        feedback.textContent = "Please fill out all fields correctly (Username#BungieID).";
+        feedback.style.color = "red";
+        return;
+      }
 
-  if (!raid || !encounter || !tag || !tag.includes("#")) {
-    feedback.textContent = "Please fill out all fields correctly (Username#BungieID).";
-    feedback.style.color = "red";
-    return;
-  }
+      localStorage.setItem("userTag", tag);
+      const command = `!queue ${raid} ${encounter} ${difficulty} ${tag}`;
 
-  localStorage.setItem("userTag", tag);
-  const command = `!queue ${raid} ${encounter} normal ${tag}`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(command).then(() => {
+          feedback.textContent = "Copied: " + command;
+          feedback.style.color = "lightgreen";
+        }).catch(() => {
+          fallbackCopy(command);
+        });
+      } else {
+        fallbackCopy(command);
+      }
+    }
 
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(command).then(() => {
-      feedback.textContent = "Copied: " + command;
-      feedback.style.color = "lightgreen";
-    }).catch(() => {
-      fallbackCopy(command);
-    });
-  } else {
-    fallbackCopy(command);
-  }
-}
-
-function fallbackCopy(text) {
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  document.body.appendChild(textarea);
-  textarea.select();
-  try {
-    document.execCommand("copy");
-    feedback.textContent = "Copied: " + text;
-    feedback.style.color = "lightgreen";
-  } catch (err) {
-    feedback.textContent = "Failed to copy to clipboard.";
-    feedback.style.color = "red";
-  }
-  document.body.removeChild(textarea);
-}
+    function fallbackCopy(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        feedback.textContent = "Copied: " + text;
+        feedback.style.color = "lightgreen";
+      } catch (err) {
+        feedback.textContent = "Failed to copy to clipboard.";
+        feedback.style.color = "red";
+      }
+      document.body.removeChild(textarea);
+    }
   </script>
 </body>
 </html>
