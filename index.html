@@ -22,14 +22,16 @@
       padding: 10px 15px;
       border-radius: 10px;
       box-shadow: 0 0 10px #000;
-      max-width: 350px;
-      width: 100%;
+      width: 350px;
+      height: 420px;
       text-align: center;
-      min-height: 420px;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       gap: 10px;
+      margin-top: -25px;
+      transform-origin: top center;
+      transform: scale(1.1);
     }
 
     h2 {
@@ -55,36 +57,6 @@
       background-color: #333;
       color: white;
       box-sizing: border-box;
-    }
-
-    /* Style for encounter select to match raid dropdown caret */
-    select#encounterSelect {
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      padding-right: 30px; /* Space for custom caret */
-      line-height: 1.4;
-      background-color: #333;
-    }
-
-    /* Wrapper for encounter select to position the caret */
-    .select-wrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .select-wrapper::after {
-      content: '';
-      position: absolute;
-      right: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid white;
-      pointer-events: none;
     }
 
     button {
@@ -117,19 +89,19 @@
 
     .select-display {
       height: 100%;
-      padding: 8px 24px 8px 0px;
+      padding: 8px 24px 8px 8px;
       background-color: #333;
       border-radius: 4px;
       cursor: pointer;
       display: flex;
-      align-items: center; /* Vertical alignment for children */
+      align-items: center;
       position: relative;
       box-sizing: border-box;
     }
 
-    .raid-content {
+    .raid-content, .encounter-content {
       display: flex;
-      align-items: center; /* Vertical center */
+      align-items: center;
       gap: 8px;
     }
 
@@ -140,7 +112,7 @@
 
     .select-display .caret {
       position: absolute;
-      right: 2px;
+      right: 8px;
       top: 50%;
       transform: translateY(-50%);
       width: 0;
@@ -277,9 +249,15 @@
       <div class="select-menu" id="raidMenu"></div>
     </div>
 
-    <!-- Native Encounter Select -->
-    <div class="select-wrapper">
-      <select id="encounterSelect"></select>
+    <!-- Custom Encounter Dropdown -->
+    <div class="custom-select" id="encounterSelect">
+      <div class="select-display" id="encounterDisplay">
+        <span class="encounter-content">
+          <span>Confluxes</span>
+        </span>
+        <span class="caret"></span>
+      </div>
+      <div class="select-menu" id="encounterMenu"></div>
     </div>
 
     <!-- Difficulty Toggle -->
@@ -292,8 +270,6 @@
     <button onclick="copyCommand()">Copy Queue Command</button>
     <p id="feedback" style="color: lightgreen;"></p>
   </div>
-</body>
-</html>
 
   <script>
     const raids = {
@@ -723,15 +699,17 @@
       { name: "D2Checkpoints", icon: "d2checkpoints.png" },
       { name: "D2Chests", icon: "d2chests.png" },
       { name: "LuckBot9", icon: "luckbot9.png" },
-      { name: "GuardianDownBot", icon: "d2chests.png" },
-      { name: "TravelersChosenTeam", icon: "d2chests.png" },
-      { name: "DestinyCheckpoints", icon: "d2chests.png" }
+      { name: "GuardianDownBot", icon: "guardiandownbot.png" },
+      { name: "TravelersChosenTeam", icon: "travelerschosenteam.png" },
+      { name: "DestinyCheckpoints", icon: "destinycheckpoints.png" }
     ];
 
     const raidSelect = document.getElementById("raidSelect");
     const raidDisplay = document.getElementById("raidDisplay");
     const raidMenu = document.getElementById("raidMenu");
     const encounterSelect = document.getElementById("encounterSelect");
+    const encounterDisplay = document.getElementById("encounterDisplay");
+    const encounterMenu = document.getElementById("encounterMenu");
     const userTagInput = document.getElementById("userTag");
     const feedback = document.getElementById("feedback");
     const difficultyRadios = document.getElementsByName("difficulty");
@@ -739,11 +717,13 @@
     const categoryTitle = document.getElementById("categoryTitle");
 
     let selectedRaid = "VoG";
+    let selectedEncounter = "Confluxes";
     let selectedDifficulty = "normal";
     let selectedCategory = "D2Checkpoints";
 
-    // Initialize with first valid raid
+    // Initialize with first valid raid and encounters
     updateRaidMenu();
+    updateEncounters();
 
     const savedUserTag = localStorage.getItem("userTag");
     if (savedUserTag) {
@@ -774,7 +754,7 @@
           const option = document.createElement("div");
           option.className = "select-option";
           option.dataset.value = abbr;
-          option.innerHTML = `<img src="images/${data.icon}" alt="${abbr}">${data.name}`;
+          option.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span>`;
           option.addEventListener("click", () => {
             selectedRaid = abbr;
             raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span><span class="caret"></span>`;
@@ -794,13 +774,51 @@
       updateEncounters();
     }
 
+    function updateEncounters() {
+      encounterMenu.innerHTML = "";
+      let encounters = [];
+      if (selectedDifficulty === "master" && raids[selectedRaid].masterEncounters && raids[selectedRaid].masterEncounters[selectedCategory]) {
+        encounters = [...new Set([
+          ...(raids[selectedRaid].encounters[selectedCategory] || []),
+          ...(raids[selectedRaid].masterEncounters[selectedCategory] || [])
+        ])];
+      } else {
+        encounters = raids[selectedRaid].encounters[selectedCategory] || [];
+      }
+
+      // Populate the encounter dropdown
+      encounters.forEach(enc => {
+        const option = document.createElement("div");
+        option.className = "select-option";
+        option.dataset.value = enc;
+        option.innerHTML = `<span class="encounter-content">${enc}</span>`;
+        option.addEventListener("click", () => {
+          selectedEncounter = enc;
+          encounterDisplay.innerHTML = `<span class="encounter-content">${enc}</span><span class="caret"></span>`;
+          encounterMenu.classList.remove("show");
+        });
+        encounterMenu.appendChild(option);
+      });
+
+      // Set default encounter display
+      selectedEncounter = encounters[0] || "";
+      encounterDisplay.innerHTML = `<span class="encounter-content">${selectedEncounter}</span><span class="caret"></span>`;
+    }
+
     raidDisplay.addEventListener("click", () => {
       raidMenu.classList.toggle("show");
+    });
+
+    encounterDisplay.addEventListener("click", () => {
+      encounterMenu.classList.toggle("show");
     });
 
     document.addEventListener("click", (e) => {
       if (!raidSelect.contains(e.target)) {
         raidMenu.classList.remove("show");
+      }
+      if (!encounterSelect.contains(e.target)) {
+        encounterMenu.classList.remove("show");
       }
     });
 
@@ -821,34 +839,9 @@
       });
     });
 
-    function updateEncounters() {
-      const currentEncounter = encounterSelect.value;
-      encounterSelect.innerHTML = "";
-      let encounters = [];
-      if (selectedDifficulty === "master" && raids[selectedRaid].masterEncounters && raids[selectedRaid].masterEncounters[selectedCategory]) {
-        encounters = [...new Set([
-          ...(raids[selectedRaid].encounters[selectedCategory] || []),
-          ...(raids[selectedRaid].masterEncounters[selectedCategory] || [])
-        ])];
-      } else {
-        encounters = raids[selectedRaid].encounters[selectedCategory] || [];
-      }
-      encounters.forEach(enc => {
-        const opt = document.createElement("option");
-        opt.value = enc;
-        opt.textContent = enc;
-        encounterSelect.appendChild(opt);
-      });
-
-      // Restore the previous selection if it exists
-      if (currentEncounter && encounters.includes(currentEncounter)) {
-        encounterSelect.value = currentEncounter;
-      }
-    }
-
     function copyCommand() {
       const raid = selectedRaid;
-      const encounter = encounterSelect.value;
+      const encounter = selectedEncounter;
       const tag = userTagInput.value.trim();
       const difficulty = selectedDifficulty;
 
