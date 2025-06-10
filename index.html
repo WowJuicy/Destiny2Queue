@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Destiny2Queue</title>
   <style>
+    :root {
+      --bg-color: #111;
+      --container-bg: #222;
+      --input-bg: #333;
+      --button-bg: #444;
+      --button-hover-bg: #555;
+      --border-color: #fff;
+      --text-color: #fff;
+      --shadow: 0 0 10px #000;
+      --border-radius: 4px;
+      --container-radius: 10px;
+      --font-family: 'Segoe UI', sans-serif;
+    }
+
     body {
-      background-color: #111;
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-family);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -19,49 +33,56 @@
     }
 
     .container {
-      background-color: #222;
+      background: var(--container-bg);
       padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #000;
+      border-radius: var(--container-radius);
+      box-shadow: var(--shadow);
       width: 90%;
       max-width: 400px;
       min-height: 450px;
       text-align: center;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
       gap: 12px;
-      margin-top: 0;
     }
 
     h2 {
-      margin-top: 0;
-      margin-bottom: 8px;
+      margin: 0 0 8px;
       text-align: center;
     }
 
     label {
       display: block;
-      margin-top: 6px;
-      margin-bottom: 2px;
+      margin: 6px 0 2px;
       font-weight: bold;
     }
 
-    select, input, button, .custom-select {
-      width: 100%;
-      height: 40px;
-      padding: 8px;
-      font-size: 16px;
-      border: none;
-      border-radius: 4px;
-      background-color: #333;
-      color: white;
-      box-sizing: border-box;
-    }
+select, input, button {
+  width: 100%;
+  height: 40px;
+  padding: 8px;
+  font-size: 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  background: var(--input-bg);
+  color: var(--text-color);
+  box-sizing: border-box;
+}
+
+.custom-select {
+  position: relative;
+  width: 100%;
+  /* no background, border-radius, height */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
 
     button {
-      background-color: #444;
-      border: 1px solid white;
+      background: var(--button-bg);
+      border: 1px solid var(--border-color);
       cursor: pointer;
       font-weight: bold;
       transition: background-color 0.2s;
@@ -69,19 +90,16 @@
     }
 
     button:hover {
-      background-color: #555;
+      background: var(--button-hover-bg);
     }
 
     #feedback {
-      font-size: 14px;
-      font-family: monospace;
+      font: 14px monospace;
       min-height: 1.4em;
-      height: auto;
       overflow-wrap: break-word;
       white-space: normal;
       word-break: break-word;
       line-height: 1.4;
-      transition: none;
     }
 
     .custom-select {
@@ -89,15 +107,13 @@
     }
 
     .select-display {
-      height: 100%;
       padding: 8px 24px 8px 8px;
-      background-color: #333;
-      border-radius: 4px;
+      background: var(--input-bg);
+      border-radius: var(--border-radius);
       cursor: pointer;
       display: flex;
       align-items: center;
       position: relative;
-      box-sizing: border-box;
     }
 
     .raid-content, .encounter-content {
@@ -115,12 +131,9 @@
       position: absolute;
       right: 8px;
       top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid white;
+      transform: translateY(-10%);
+      border: 6px solid transparent;
+      border-top-color: var(--border-color);
       pointer-events: none;
     }
 
@@ -130,9 +143,9 @@
       top: 100%;
       left: 0;
       right: 0;
-      background-color: #333;
-      border-radius: 4px;
-      border: 1px solid white;
+      background: var(--input-bg);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-color);
       z-index: 10;
       max-height: 200px;
       overflow-y: auto;
@@ -150,7 +163,7 @@
     }
 
     .select-option:hover {
-      background-color: #444;
+      background: var(--button-bg);
     }
 
     .select-option img {
@@ -189,7 +202,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: #333;
+      background: var(--input-bg);
       border: 2px solid transparent;
       cursor: pointer;
       display: flex;
@@ -205,12 +218,12 @@
     }
 
     .category-button.selected {
-      border-color: #fff;
-      background-color: #444;
+      border-color: var(--border-color);
+      background: var(--button-bg);
     }
 
     .category-button:hover {
-      background-color: #555;
+      background: var(--button-hover-bg);
     }
 
     @media (max-width: 480px) {
@@ -248,8 +261,6 @@
         <img src="images/destinycheckpoints.png" alt="DestinyCheckpoints">
       </div>
     </div>
-
-    <!-- Custom Raid Dropdown -->
     <div class="custom-select" id="raidSelect">
       <div class="select-display" id="raidDisplay">
         <span class="raid-content">
@@ -260,8 +271,6 @@
       </div>
       <div class="select-menu" id="raidMenu"></div>
     </div>
-
-    <!-- Custom Encounter Dropdown -->
     <div class="custom-select" id="encounterSelect">
       <div class="select-display" id="encounterDisplay">
         <span class="encounter-content">
@@ -271,18 +280,14 @@
       </div>
       <div class="select-menu" id="encounterMenu"></div>
     </div>
-
-    <!-- Difficulty Toggle -->
     <div class="difficulty-container">
       <label><input type="radio" name="difficulty" value="normal" checked> Normal</label>
       <label><input type="radio" name="difficulty" value="master"> Master</label>
     </div>
-
-    <input type="text" id="userTag" placeholder="Username#BungieID" />
+    <input type="text" id="userTag" placeholder="Username#BungieID">
     <button onclick="copyCommand()">Copy Queue Command</button>
     <p id="feedback" style="color: lightgreen;"></p>
   </div>
-
   <script>
     const raids = {
       "VoG": { 
@@ -706,202 +711,144 @@
         }
       }
     };
+    const elements = {
+      raidSelect: document.getElementById("raidSelect"),
+      raidDisplay: document.getElementById("raidDisplay"),
+      raidMenu: document.getElementById("raidMenu"),
+      encounterSelect: document.getElementById("encounterSelect"),
+      encounterDisplay: document.getElementById("encounterDisplay"),
+      encounterMenu: document.getElementById("encounterMenu"),
+      userTag: document.getElementById("userTag"),
+      feedback: document.getElementById("feedback"),
+      difficultyRadios: document.getElementsByName("difficulty"),
+      categoryButtons: document.querySelectorAll(".category-button"),
+      categoryTitle: document.getElementById("categoryTitle")
+    };
 
-    const categories = [
-      { name: "D2Checkpoints", icon: "d2checkpoints.png" },
-      { name: "D2Chests", icon: "d2chests.png" },
-      { name: "LuckBot9", icon: "luckbot9.png" },
-      { name: "GuardianDownBot", icon: "guardiandownbot.png" },
-      { name: "TravelersChosenTeam", icon: "travelerschosenteam.png" },
-      { name: "DestinyCheckpoints", icon: "destinycheckpoints.png" }
-    ];
+    let state = {
+      selectedRaid: "VoG",
+      selectedEncounter: "Confluxes",
+      selectedDifficulty: "normal",
+      selectedCategory: "D2Checkpoints"
+    };
 
-    const raidSelect = document.getElementById("raidSelect");
-    const raidDisplay = document.getElementById("raidDisplay");
-    const raidMenu = document.getElementById("raidMenu");
-    const encounterSelect = document.getElementById("encounterSelect");
-    const encounterDisplay = document.getElementById("encounterDisplay");
-    const encounterMenu = document.getElementById("encounterMenu");
-    const userTagInput = document.getElementById("userTag");
-    const feedback = document.getElementById("feedback");
-    const difficultyRadios = document.getElementsByName("difficulty");
-    const categoryButtons = document.querySelectorAll(".category-button");
-    const categoryTitle = document.getElementById("categoryTitle");
-
-    let selectedRaid = "VoG";
-    let selectedEncounter = "Confluxes";
-    let selectedDifficulty = "normal";
-    let selectedCategory = "D2Checkpoints";
-
-    // Initialize with first valid raid and encounters
-    updateRaidMenu();
-    updateEncounters();
-
-    const savedUserTag = localStorage.getItem("userTag");
-    if (savedUserTag) {
-      userTagInput.value = savedUserTag;
+    function initialize() {
+      updateRaidMenu();
+      elements.userTag.value = localStorage.getItem("userTag") || "";
+      elements.userTag.addEventListener("input", () => {
+        const tag = elements.userTag.value.trim();
+        localStorage.setItem("userTag", tag || "");
+      });
+      elements.userTag.addEventListener("blur", () => {
+        document.querySelector('meta[name="viewport"]').setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
+        setTimeout(() => document.body.style.zoom = "100%", 100);
+      });
+      elements.difficultyRadios.forEach(radio => radio.addEventListener("change", () => {
+        state.selectedDifficulty = radio.value;
+        updateRaidMenu();
+      }));
+      elements.categoryButtons.forEach(button => button.addEventListener("click", () => {
+        elements.categoryButtons.forEach(btn => btn.classList.remove("selected"));
+        button.classList.add("selected");
+        state.selectedCategory = button.dataset.category;
+        elements.categoryTitle.textContent = state.selectedCategory;
+        updateRaidMenu();
+      }));
+      elements.raidDisplay.addEventListener("click", () => elements.raidMenu.classList.toggle("show"));
+      elements.encounterDisplay.addEventListener("click", () => elements.encounterMenu.classList.toggle("show"));
+      document.addEventListener("click", e => {
+        if (!elements.raidSelect.contains(e.target)) elements.raidMenu.classList.remove("show");
+        if (!elements.encounterSelect.contains(e.target)) elements.encounterMenu.classList.remove("show");
+      });
     }
 
-    userTagInput.addEventListener("input", () => {
-      const tag = userTagInput.value.trim();
-      if (tag) {
-        localStorage.setItem("userTag", tag);
-      } else {
-        localStorage.removeItem("userTag");
-      }
-    });
-
-    // Reset viewport zoom on input blur
-    userTagInput.addEventListener("blur", () => {
-      const viewport = document.querySelector('meta[name="viewport"]');
-      viewport.setAttribute("content", "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no");
-      setTimeout(() => {
-        document.body.style.zoom = "100%";
-      }, 100);
-    });
-
     function updateRaidMenu() {
-      raidMenu.innerHTML = "";
-      let validRaids = [];
-      
-      // Find all raids with non-empty encounters for current category and difficulty
-      for (const [abbr, data] of Object.entries(raids)) {
-        const encounters = selectedDifficulty === "master" && data.masterEncounters?.[selectedCategory]
-          ? [...new Set([...(data.encounters[selectedCategory] || []), ...(data.masterEncounters[selectedCategory] || [])])]
-          : data.encounters[selectedCategory] || [];
-        
-        if (encounters.length > 0) {
-          validRaids.push(abbr);
-          const option = document.createElement("div");
-          option.className = "select-option";
-          option.dataset.value = abbr;
-          option.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span>`;
-          option.addEventListener("click", () => {
-            selectedRaid = abbr;
-            raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span><span class="caret"></span>`;
-            raidMenu.classList.remove("show");
-            updateEncounters();
-          });
-          raidMenu.appendChild(option);
-        }
-      }
+      elements.raidMenu.innerHTML = "";
+      const validRaids = Object.entries(raids).filter(([abbr, data]) => {
+        const encounters = state.selectedDifficulty === "master" && data.masterEncounters?.[state.selectedCategory]
+          ? [...new Set([...(data.encounters[state.selectedCategory] || []), ...(data.masterEncounters[state.selectedCategory] || [])])]
+          : data.encounters[state.selectedCategory] || [];
+        return encounters.length > 0;
+      }).map(([abbr]) => abbr);
 
-      // Ensure selectedRaid is valid; if not, select first valid raid
-      if (!validRaids.includes(selectedRaid)) {
-        selectedRaid = validRaids[0] || "VoG";
-        raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${raids[selectedRaid].icon}" alt="${selectedRaid}">${raids[selectedRaid].name}</span><span class="caret"></span>`;
-      }
+      validRaids.forEach(abbr => {
+        const data = raids[abbr];
+        const option = document.createElement("div");
+        option.className = "select-option";
+        option.dataset.value = abbr;
+        option.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span>`;
+        option.addEventListener("click", () => {
+          state.selectedRaid = abbr;
+          elements.raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span><span class="caret"></span>`;
+          elements.raidMenu.classList.remove("show");
+          updateEncounters();
+        });
+        elements.raidMenu.appendChild(option);
+      });
 
+      if (!validRaids.includes(state.selectedRaid)) {
+        state.selectedRaid = validRaids[0] || "VoG";
+        const raidData = raids[state.selectedRaid];
+        elements.raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${raidData.icon}" alt="${state.selectedRaid}">${raidData.name}</span><span class="caret"></span>`;
+      }
       updateEncounters();
     }
 
     function updateEncounters() {
-      encounterMenu.innerHTML = "";
-      let encounters = [];
-      if (selectedDifficulty === "master" && raids[selectedRaid].masterEncounters && raids[selectedRaid].masterEncounters[selectedCategory]) {
-        encounters = [...new Set([
-          ...(raids[selectedRaid].encounters[selectedCategory] || []),
-          ...(raids[selectedRaid].masterEncounters[selectedCategory] || [])
-        ])];
-      } else {
-        encounters = raids[selectedRaid].encounters[selectedCategory] || [];
-      }
+      elements.encounterMenu.innerHTML = "";
+      const encounters = state.selectedDifficulty === "master" && raids[state.selectedRaid].masterEncounters?.[state.selectedCategory]
+        ? [...new Set([...(raids[state.selectedRaid].encounters[state.selectedCategory] || []), ...(raids[state.selectedRaid].masterEncounters[state.selectedCategory] || [])])]
+        : raids[state.selectedRaid].encounters[state.selectedCategory] || [];
 
-      // Populate the encounter dropdown
       encounters.forEach(enc => {
         const option = document.createElement("div");
         option.className = "select-option";
         option.dataset.value = enc;
         option.innerHTML = `<span class="encounter-content">${enc}</span>`;
         option.addEventListener("click", () => {
-          selectedEncounter = enc;
-          encounterDisplay.innerHTML = `<span class="encounter-content">${enc}</span><span class="caret"></span>`;
-          encounterMenu.classList.remove("show");
+          state.selectedEncounter = enc;
+          elements.encounterDisplay.innerHTML = `<span class="encounter-content">${enc}</span><span class="caret"></span>`;
+          elements.encounterMenu.classList.remove("show");
         });
-        encounterMenu.appendChild(option);
+        elements.encounterMenu.appendChild(option);
       });
 
-      // Set default encounter display
-      selectedEncounter = encounters[0] || "";
-      encounterDisplay.innerHTML = `<span class="encounter-content">${selectedEncounter}</span><span class="caret"></span>`;
+      state.selectedEncounter = encounters[0] || "";
+      elements.encounterDisplay.innerHTML = `<span class="encounter-content">${state.selectedEncounter}</span><span class="caret"></span>`;
     }
 
-    raidDisplay.addEventListener("click", () => {
-      raidMenu.classList.toggle("show");
-    });
-
-    encounterDisplay.addEventListener("click", () => {
-      encounterMenu.classList.toggle("show");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!raidSelect.contains(e.target)) {
-        raidMenu.classList.remove("show");
-      }
-      if (!encounterSelect.contains(e.target)) {
-        encounterMenu.classList.remove("show");
-      }
-    });
-
-    difficultyRadios.forEach(radio => {
-      radio.addEventListener("change", () => {
-        selectedDifficulty = radio.value;
-        updateRaidMenu();
-      });
-    });
-
-    categoryButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        categoryButtons.forEach(btn => btn.classList.remove("selected"));
-        button.classList.add("selected");
-        selectedCategory = button.dataset.category;
-        categoryTitle.textContent = selectedCategory;
-        updateRaidMenu();
-      });
-    });
-
     function copyCommand() {
-      const raid = selectedRaid;
-      const encounter = selectedEncounter;
-      const tag = userTagInput.value.trim();
-      const difficulty = selectedDifficulty;
+      const { selectedRaid: raid, selectedEncounter: encounter, selectedDifficulty: difficulty } = state;
+      const tag = elements.userTag.value.trim();
 
       if (!raid || !encounter || !tag || !tag.includes("#")) {
-        feedback.textContent = "Please fill out all fields correctly (Username#BungieID).";
-        feedback.style.color = "red";
+        elements.feedback.textContent = "Please fill out Bungie name correctly (Username#BungieID).";
+        elements.feedback.style.color = "red";
         return;
       }
 
-      localStorage.setItem("userTag", tag);
       const command = `!queue ${raid} ${encounter} ${difficulty} ${tag}`;
-
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(command).then(() => {
-          feedback.textContent = "Copied: " + command;
-          feedback.style.color = "lightgreen";
-        }).catch(() => {
-          fallbackCopy(command);
-        });
-      } else {
-        fallbackCopy(command);
-      }
+      navigator.clipboard?.writeText(command).then(() => {
+        elements.feedback.textContent = `Copied: ${command}`;
+        elements.feedback.style.color = "lightgreen";
+      }).catch(() => {
+        const textarea = document.createElement("textarea");
+        textarea.value = command;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          elements.feedback.textContent = `Copied: ${command}`;
+          elements.feedback.style.color = "lightgreen";
+        } catch {
+          elements.feedback.textContent = "Failed to copy to clipboard.";
+          elements.feedback.style.color = "red";
+        }
+        document.body.removeChild(textarea);
+      });
     }
 
-    function fallbackCopy(text) {
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand("copy");
-        feedback.textContent = "Copied: " + text;
-        feedback.style.color = "lightgreen";
-      } catch (err) {
-        feedback.textContent = "Failed to copy to clipboard.";
-        feedback.style.color = "red";
-      }
-      document.body.removeChild(textarea);
-    }
+    initialize();
   </script>
 </body>
 </html>
