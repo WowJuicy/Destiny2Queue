@@ -57,28 +57,26 @@
       font-weight: bold;
     }
 
-select, input, button {
-  width: 100%;
-  height: 40px;
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-  border-radius: var(--border-radius);
-  background: var(--input-bg);
-  color: var(--text-color);
-  box-sizing: border-box;
-}
+    select, input, button {
+      width: 100%;
+      height: 40px;
+      padding: 8px;
+      font-size: 16px;
+      border: none;
+      border-radius: var(--border-radius);
+      background: var(--input-bg);
+      color: var(--text-color);
+      box-sizing: border-box;
+    }
 
-.custom-select {
-  position: relative;
-  width: 100%;
-  /* no background, border-radius, height */
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-}
-
+    .custom-select {
+      position: relative;
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+    }
 
     button {
       background: var(--button-bg);
@@ -100,10 +98,6 @@ select, input, button {
       white-space: normal;
       word-break: break-word;
       line-height: 1.4;
-    }
-
-    .custom-select {
-      position: relative;
     }
 
     .select-display {
@@ -362,7 +356,7 @@ select, input, button {
           DestinyCheckpoints: ["Chest1", "Chest2", "Rhulk"]
         },
         masterEncounters: {
-          desesper: [],
+          D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
           GuardianDownBot: [],
@@ -382,12 +376,12 @@ select, input, button {
           DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
         },
         masterEncounters: {
-          D2Checkpoints: ["1", "2"],
+          D2Checkpoints: ["1", "2", "Boss"],
           D2Chests: [],
-          LuckBot9: ["1", "2"],
+          LuckBot9: ["1", "2", "Boss"],
           GuardianDownBot: ["1"],
-          TravelersChosenTeam: ["1", "2"],
-          DestinyCheckpoints: ["1", "2"]
+          TravelersChosenTeam: ["1", "2", "Boss"],
+          DestinyCheckpoints: ["1", "2", "Boss"]
         }
       },
       "KF": { 
@@ -402,12 +396,12 @@ select, input, button {
           DestinyCheckpoints: ["Maze", "Wall", "Oryx"]
         },
         masterEncounters: {
-          D2Checkpoints: ["Golgoroth", "Daughters"],
+          D2Checkpoints: ["Golgoroth", "Daughters", "Oryx"],
           D2Chests: [],
-          LuckBot9: ["Golgoroth", "Warpriest"],
-          GuardianDownBot: ["Totems", "Golgoroth"],
-          TravelersChosenTeam: ["Warpriest", "Daughters"],
-          DestinyCheckpoints: ["Totems", "Daughters"]
+          LuckBot9: ["Golgoroth", "Warpriest", "Oryx"],
+          GuardianDownBot: ["Totems", "Golgoroth", "Oryx"],
+          TravelersChosenTeam: ["Warpriest", "Daughters", "Oryx"],
+          DestinyCheckpoints: ["Totems", "Daughters", "Oryx"]
         }
       },
       "SE": { 
@@ -422,12 +416,12 @@ select, input, button {
           DestinyCheckpoints: ["Chest2", "Witness"]
         },
         masterEncounters: {
-          D2Checkpoints: [],
+          D2Checkpoints: ["Witness"],
           D2Chests: [],
-          LuckBot9: [],
-          GuardianDownBot: [],
-          TravelersChosenTeam: [],
-          DestinyCheckpoints: []
+          LuckBot9: ["Witness"],
+          GuardianDownBot: ["Witness"],
+          TravelersChosenTeam: ["Witness"],
+          DestinyCheckpoints: ["Witness"]
         }
       },
       "VH": { 
@@ -442,12 +436,12 @@ select, input, button {
           DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
         },
         masterEncounters: {
-          D2Checkpoints: ["1", "2"],
+          D2Checkpoints: ["1", "2", "Boss"],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: ["1", "2"],
-          TravelersChosenTeam: ["1"],
-          DestinyCheckpoints: ["1", "2"]
+          GuardianDownBot: ["1", "2", "Boss"],
+          TravelersChosenTeam: ["1", "2", "Boss"],
+          DestinyCheckpoints: ["1", "2", "Boss"]
         }
       },
       "Duality": { 
@@ -462,12 +456,12 @@ select, input, button {
           DestinyCheckpoints: ["Chest1", "Chest2", "Boss"]
         },
         masterEncounters: {
-          D2Checkpoints: ["1", "2"],
+          D2Checkpoints: ["1", "2", "Boss"],
           D2Chests: [],
-          LuckBot9: ["1", "2"],
-          GuardianDownBot: ["1", "2"],
+          LuckBot9: ["1", "2", "Boss"],
+          GuardianDownBot: ["1", "2", "Boss"],
           TravelersChosenTeam: ["1", "2"],
-          DestinyCheckpoints: ["1", "2"]
+          DestinyCheckpoints: ["1", "2", "Boss"]
         }
       },
       "RoN": { 
@@ -657,7 +651,7 @@ select, input, button {
           D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: ["FirstContact", "1", "2", "3", "4", "5", "6", "7", "8"],
+          GuardianDownBot: ["FirstContact"],
           TravelersChosenTeam: [],
           DestinyCheckpoints: []
         },
@@ -665,7 +659,7 @@ select, input, button {
           D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: [],
+          GuardianDownBot: ["1", "2", "3", "4", "5", "6", "7", "8"],
           TravelersChosenTeam: [],
           DestinyCheckpoints: []
         }
@@ -677,7 +671,7 @@ select, input, button {
           D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: ["1", "2", "3", "4", "5", "6", "7", "8"],
+          GuardianDownBot: [],
           TravelersChosenTeam: [],
           DestinyCheckpoints: []
         },
@@ -685,7 +679,7 @@ select, input, button {
           D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: [],
+          GuardianDownBot: ["1", "2", "3", "4", "5", "6", "7", "8"],
           TravelersChosenTeam: [],
           DestinyCheckpoints: []
         }
@@ -697,7 +691,7 @@ select, input, button {
           D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: ["Ascent", "Dissent", "Iconoclasm", "1", "2", "3", "4", "5", "6", "7"],
+          GuardianDownBot: ["Ascent", "Dissent", "Iconoclasm"],
           TravelersChosenTeam: [],
           DestinyCheckpoints: []
         },
@@ -705,7 +699,7 @@ select, input, button {
           D2Checkpoints: [],
           D2Chests: [],
           LuckBot9: [],
-          GuardianDownBot: [],
+          GuardianDownBot: ["1", "2", "3", "4", "5", "6", "7"],
           TravelersChosenTeam: [],
           DestinyCheckpoints: []
         }
@@ -762,42 +756,56 @@ select, input, button {
       });
     }
 
-    function updateRaidMenu() {
-      elements.raidMenu.innerHTML = "";
-      const validRaids = Object.entries(raids).filter(([abbr, data]) => {
-        const encounters = state.selectedDifficulty === "master" && data.masterEncounters?.[state.selectedCategory]
-          ? [...new Set([...(data.encounters[state.selectedCategory] || []), ...(data.masterEncounters[state.selectedCategory] || [])])]
-          : data.encounters[state.selectedCategory] || [];
-        return encounters.length > 0;
-      }).map(([abbr]) => abbr);
+function updateRaidMenu() {
+  elements.raidMenu.innerHTML = "";
+  const validRaids = Object.entries(raids).filter(([abbr, data]) => {
+    const encounters = state.selectedDifficulty === "master"
+      ? data.masterEncounters[state.selectedCategory] || []
+      : data.encounters[state.selectedCategory] || [];
+    return encounters.length > 0;
+  }).map(([abbr]) => abbr);
 
-      validRaids.forEach(abbr => {
-        const data = raids[abbr];
-        const option = document.createElement("div");
-        option.className = "select-option";
-        option.dataset.value = abbr;
-        option.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span>`;
-        option.addEventListener("click", () => {
-          state.selectedRaid = abbr;
-          elements.raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span><span class="caret"></span>`;
-          elements.raidMenu.classList.remove("show");
-          updateEncounters();
-        });
-        elements.raidMenu.appendChild(option);
-      });
+  // If the selected raid doesn't support Master in the new category, switch to Normal
+  if (state.selectedDifficulty === "master" && validRaids.length === 0) {
+    state.selectedDifficulty = "normal";
+    elements.difficultyRadios.forEach(radio => {
+      radio.checked = radio.value === "normal";
+    });
+    // Recalculate valid raids with Normal difficulty
+    validRaids.length = 0;
+    Object.entries(raids).forEach(([abbr, data]) => {
+      const encounters = data.encounters[state.selectedCategory] || [];
+      if (encounters.length > 0) validRaids.push(abbr);
+    });
+  }
 
-      if (!validRaids.includes(state.selectedRaid)) {
-        state.selectedRaid = validRaids[0] || "VoG";
-        const raidData = raids[state.selectedRaid];
-        elements.raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${raidData.icon}" alt="${state.selectedRaid}">${raidData.name}</span><span class="caret"></span>`;
-      }
+  validRaids.forEach(abbr => {
+    const data = raids[abbr];
+    const option = document.createElement("div");
+    option.className = "select-option";
+    option.dataset.value = abbr;
+    option.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span>`;
+    option.addEventListener("click", () => {
+      state.selectedRaid = abbr;
+      elements.raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${data.icon}" alt="${abbr}">${data.name}</span><span class="caret"></span>`;
+      elements.raidMenu.classList.remove("show");
       updateEncounters();
-    }
+    });
+    elements.raidMenu.appendChild(option);
+  });
+
+  if (!validRaids.includes(state.selectedRaid)) {
+    state.selectedRaid = validRaids[0] || "VoG";
+    const raidData = raids[state.selectedRaid];
+    elements.raidDisplay.innerHTML = `<span class="raid-content"><img src="images/${raidData.icon}" alt="${state.selectedRaid}">${raidData.name}</span><span class="caret"></span>`;
+  }
+  updateEncounters();
+}
 
     function updateEncounters() {
       elements.encounterMenu.innerHTML = "";
-      const encounters = state.selectedDifficulty === "master" && raids[state.selectedRaid].masterEncounters?.[state.selectedCategory]
-        ? [...new Set([...(raids[state.selectedRaid].encounters[state.selectedCategory] || []), ...(raids[state.selectedRaid].masterEncounters[state.selectedCategory] || [])])]
+      const encounters = state.selectedDifficulty === "master"
+        ? raids[state.selectedRaid].masterEncounters[state.selectedCategory] || []
         : raids[state.selectedRaid].encounters[state.selectedCategory] || [];
 
       encounters.forEach(enc => {
